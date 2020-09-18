@@ -1,0 +1,25 @@
+﻿<Window x:Class="SalesApp.OrdersTableWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalesApp"
+        mc:Ignorable="d"
+        Title="OrdersTableWindow" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background.jpg"/>
+        </Grid.Background>
+        <DataGrid x:Name="grdOrders" AutoGenerateColumns="False" Margin="10" Loaded="grdOrders_Loaded" FontSize="16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="OrderID" Binding="{Binding OrderID}"/>
+                <DataGridTextColumn Header="CustomerID" Binding="{Binding CustomerID}"/>
+                <DataGridTextColumn Header="OrderDate" Binding="{Binding OrderDate}"/>
+                <DataGridTextColumn Header="FilledDate" Binding="{Binding FilledDate}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

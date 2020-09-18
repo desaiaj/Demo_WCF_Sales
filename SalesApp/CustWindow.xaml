@@ -1,0 +1,102 @@
+﻿<Window x:Class="SalesApp.CustWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalesApp"
+        mc:Ignorable="d"
+        Title="Customers"  Height="700" Width="1335" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background.jpg"/>
+        </Grid.Background>
+        <Grid Margin="15,15,15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="list_customers" Grid.Column="0" HorizontalAlignment="Left" Height="620" Margin="10,10,10,10" VerticalAlignment="Top" Width="570" Loaded="List_customers_OnLoad" SelectionChanged="List_customers_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="200"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding CustomerID}" />
+                            <TextBlock Grid.Column="1" Text="{Binding CustomerName}" />
+                            <TextBlock Grid.Column="2" Text="{Binding YTDOrders}" />
+                            <TextBlock Grid.Column="3" Text="{Binding YTDSales}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel HorizontalAlignment="Right" Height="620" Margin="10,10,0,0" VerticalAlignment="Top" Width="668" Grid.ColumnSpan="2">
+                <Label Content="Manage Customers" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,7,10,15" BorderBrush="#FFECFE00" BorderThickness="0,0,0,1" Foreground="White" Padding="5,15" FontFamily="Verdana">
+                    <Label.Background>
+                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.255"/>
+                    </Label.Background>
+                </Label>
+
+                <Label Content="Customer ID: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,5,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                <TextBox x:Name="txt_customers_id" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" SpellCheck.IsEnabled="True" Height="44" MaxLines="1" MaxLength="5" PreviewTextInput="txt_customers_id_PreviewTextInput"/>
+
+                <Label Content="Customer Name: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                <TextBox x:Name="txt_customers_name" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" SpellCheck.IsEnabled="True" Height="44" MaxLines="1" MaxLength="30"/>
+
+                <Label Content="YTD Orders: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                <TextBox x:Name="txt_ytd_orders" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" SpellCheck.IsEnabled="True" Height="44" MaxLines="1" MaxLength="5" Text="0" PreviewTextInput="txt_ytd_orders_PreviewTextInput"/>
+
+                <Label Content="YTD Sales" HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                <TextBox x:Name="txt_ytd_Sales" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" SpellCheck.IsEnabled="True" Height="44" MaxLines="1" MaxLength="5" Text="0" PreviewTextInput="txt_ytd_Sales_PreviewTextInput"/>
+                <Grid Width="auto" Height="50" Margin="10,10,10,0">
+                    <Label x:Name="lbl_error_msg" Content="" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="10,10,10,10" FontSize="24" FontFamily="Verdana" Foreground="#FFEA1212" Margin="282,0,282,1"/>
+                    <Label x:Name="lbl_success_msg" Content="" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="10,10,10,10" FontSize="24" FontFamily="Verdana" Foreground="#FF2B9C1A" Margin="282,0,282,1"/>
+                </Grid>
+                <Grid Width="auto" Height="90" Margin="20,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btn_add" Content="Add" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Click="btnAdd_Click" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="btn_update" Content="Update" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_update_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="2" x:Name="btn_delete" Content="Delete" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_delete_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="3" x:Name="btn_reset" Content="Reset" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_reset_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

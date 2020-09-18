@@ -1,0 +1,152 @@
+﻿<Window x:Name="OrderWindow1" x:Class="SalesApp.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SalesApp"
+        mc:Ignorable="d"
+            Title="Orders"  Height="700" Width="1400" Left="0" Top="0" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/background.jpg"/>
+        </Grid.Background>
+        <Grid Margin="15,15,15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="70"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="list_orders" Grid.Row="0" Grid.Column="0" Margin="5,10" Loaded="List_orders_OnLoad" SelectionChanged="List_orders_SelectionChanged" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="20"></ColumnDefinition>
+                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                <ColumnDefinition Width="140"></ColumnDefinition>
+                                <ColumnDefinition Width="50"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding OrderID}" />
+                            <TextBlock Grid.Column="1" Text="{Binding CustomerID}" />
+                            <TextBlock Grid.Column="2" Text="{Binding Status}" />
+                            <TextBlock Grid.Column="3" Text="{Binding OrderDate}" />
+                            <TextBlock Grid.Column="4" Text="{Binding FilledDate}" />
+                            <TextBlock Grid.Column="5" Text="{Binding Amount}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Column="0" Grid.Row="1" x:Name="btn_Fulltable" Content="View all data" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" FontFamily="Verdana" FontWeight="SemiBold" Click="btn_Fulltable_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF1D336F" Offset="0"/>
+                        <GradientStop Color="#FF2A4789" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <StackPanel Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Right" Height="620" Margin="10,10,0,0" VerticalAlignment="Top" Width="670">
+                <Label Content="Manage Orders" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,7,10,15" BorderBrush="#FFECFE00" BorderThickness="0,0,0,1" Foreground="White" Padding="5,15" FontFamily="Verdana">
+                    <Label.Background>
+                        <SolidColorBrush Color="#FFF0F0F0" Opacity="0.255"/>
+                    </Label.Background>
+                </Label>
+
+                <Label Content="Order ID:" HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,5,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                <TextBox x:Name="txt_Order_id" TextWrapping="Wrap" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" SpellCheck.IsEnabled="True" Height="44" MaxLines="1" MaxLength="5" PreviewTextInput="txt_Order_id_PreviewTextInput"/>
+
+                <Label Content="Customer:" HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Stretch" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana">
+                </Label>
+                <ComboBox x:Name="ddl_customer" HorizontalAlignment="Stretch" Margin="20,3,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" Loaded="ddl_customers_OnLoad">
+                    <!--<ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Grid.Column="0" Text="{Binding}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>-->
+                </ComboBox>
+                <Grid Width="auto" Height="100" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Label Content="Order Date: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Top" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                        <DatePicker x:Name="dt_order_date" HorizontalAlignment="Stretch" Margin="10,40,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" Height="50" Text="0"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label Content="Filled Date: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Top" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                        <DatePicker x:Name="dt_filled_date" HorizontalAlignment="Stretch" Margin="10,40,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" Height="50" Text="0"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Width="auto" Height="105" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Label Content="Status" HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Top" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                        <ComboBox x:Name="ddl_status" HorizontalAlignment="Stretch" Margin="20,48,25,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" Loaded="ddl_status_OnLoad">
+                            <!--<ComboBoxItem Content="N"/>
+                            <ComboBoxItem Content="P"/>
+                            <ComboBoxItem Content="D" />-->
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Label Content="Amount: " HorizontalAlignment="Stretch" Foreground="White" Margin="20,5,20,0" Padding="0,10,5,5" VerticalAlignment="Top" VerticalContentAlignment="Bottom" BorderBrush="Gainsboro" FontSize="19" FontFamily="Verdana"/>
+                        <TextBox x:Name="txt_amount" HorizontalAlignment="Stretch" Margin="10,48,20,10" ToolTip="Auto generated" Padding="10,10,5,5" FontFamily="Verdana" FontSize="20" Height="50" Text="0" PreviewTextInput="txt_amount_PreviewTextInput"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Width="auto" Height="50" Margin="10,10,10,0">
+                    <Label x:Name="lbl_error_msg" Content="" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="10,10,10,10" FontSize="24" FontFamily="Verdana" Foreground="#FFEA1212" Margin="282,0,282,1"/>
+                    <Label x:Name="lbl_success_msg" Content="" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="10,10,10,10" FontSize="24" FontFamily="Verdana" Foreground="#FF2B9C1A" Margin="282,0,282,1"/>
+                </Grid>
+                <Grid Width="auto" Height="90" Margin="20,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" x:Name="btn_add" Content="Add" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Click="btnAdd_Click" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="btn_update" Content="Update" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_update_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="2" x:Name="btn_delete" Content="Delete" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_delete_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button Grid.Column="3" x:Name="btn_reset" Content="Reset" Margin="4,4,4,4" Padding="10,3,5,5" FontSize="20" Foreground="White" BorderThickness="2,2,2,2" BorderBrush="White" Height="52" ScrollViewer.CanContentScroll="True" FontFamily="Verdana" FontWeight="SemiBold" Click="Btn_reset_Click">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF1D336F" Offset="0"/>
+                                <GradientStop Color="#FF2A4789" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
